@@ -7,11 +7,12 @@ using namespace std;
 class Linear
 {
 private:
-    vector<double> weights;
+    vector<vector<double>> weights;
+    vector<double> bias;
 
 public:
-    Linear(int input_size);
-    vector<double> forward(const vector<double>& x, double b);
+    Linear(int input_size, int batch_size);
+    vector<double> forward(const vector<vector<double>>& x);
 };
 
 #endif

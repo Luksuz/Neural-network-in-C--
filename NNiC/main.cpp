@@ -2,31 +2,29 @@
 #include "ReLU.h"
 #include "Linear.h"
 
+using namespace std;
+
 int main() {
-    std::vector<double> input = {1.0, -2.0, 3.0, -4.0};
+    vector<vector<double>> input_arr = {{1.0, -2.0, 3.0, -4.0}, {2.0, 3.0, 1.0, 0}, {3.2, 1.1, -1.0, -3.0}};
 
-    // Create a Linear layer
-    Linear linear(input.size());
+    Linear linear(input_arr[0].size(), input_arr.size());
     
-    // Forward pass through Linear layer
-    std::vector<double> z1 = linear.forward(input, 0);
+    vector<double> z1 = linear.forward(input_arr);
+    vector<double> a1 = relu(z1);
 
-    // Apply ReLU activation
-    std::vector<double> output = relu(z1);
-
-    // Print the input vector
-    std::cout << "Input: ";
-    for (auto val : input) {
-        std::cout << val << " ";
+    cout << "Input: ";
+    for (auto input : input_arr) {
+        for (auto val : input) {
+        cout << val << " ";
+        }
     }
-    std::cout << std::endl;
+    cout << endl;
 
-    // Print the output after ReLU
-    std::cout << "Output after ReLU: ";
-    for (auto val : output) {
-        std::cout << val << " ";
+    cout << "Output after ReLU: ";
+    for (auto val : a1) {
+        cout << val << " ";
     }
-    std::cout << std::endl;
+    cout << endl;
 
     return 0;
 }

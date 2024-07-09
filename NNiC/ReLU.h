@@ -3,6 +3,8 @@
 
 #include <vector>
 
-std::vector<double> relu(const std::vector<double>& z);
+using namespace std;
+
+vector<double> relu(const vector<double>& z);
 
 #endif
