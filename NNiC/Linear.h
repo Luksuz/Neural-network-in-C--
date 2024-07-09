@@ -1,18 +1,20 @@
 #ifndef Linear_H
 #define Linear_H
 
+#include "Neuron.h"
 #include <vector>
+
 using namespace std;
 
 class Linear
 {
 private:
-    vector<vector<double>> weights;
-    vector<double> bias;
+    vector<Neuron> neurons;
+    vector<double> a;
 
 public:
-    Linear(int input_size, int batch_size);
-    vector<double> forward(const vector<vector<double>>& x);
+    Linear(int in_features, int n_neurons);
+    vector<vector<double>> forward(vector<vector<double>> x);
 };
 
 #endif

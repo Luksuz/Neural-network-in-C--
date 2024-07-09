@@ -1,34 +1,23 @@
 #include "Linear.h"
-#include <cstdlib>   // For rand() function
-#include <ctime>     // For srand() function
 
 using namespace std;
 
-Linear::Linear(int input_size, int batch_size) {
-    srand(time(0));
-    weights.resize(batch_size);  
-    for (int i = 0; i < batch_size; ++i) {
-        weights[i].resize(input_size);
-        for (int j = 0; j < input_size; ++j) {
-            weights[i][j] = static_cast<double>(rand()) / RAND_MAX;
-        }
-    }
-
-    bias.resize(input_size);  
-    for (int i = 0; i < batch_size; ++i) {
-        bias[i] = static_cast<double>(rand()) / RAND_MAX;
+Linear::Linear(int in_features, int n_neurons){
+    for (int i = 0; i < n_neurons; ++i) {
+        Neuron neuron(in_features);
+        neurons.push_back(neuron);
     }
 }
 
-
-vector<double> Linear::forward(const vector<vector<double>>& x) {
-    vector<double> result;
-    for (int i = 0; i < x.size(); ++i){
-        double sum = 0.0;
-        for (int j = 0; j < x[i].size(); ++j){
-            sum += weights[i][j] * x[i][j];
+vector<vector<double>> Linear::forward(const vector<vector<double>> x) {
+    vector<vector<double>> result;
+    for (const auto& input : x) {
+        vector<double> curr_linear_prod;
+        for (Neuron& neuron : neurons) {
+            double linear_prod = neuron.linear_transform(input);
+            curr_linear_prod.push_back(linear_prod);
         }
-        result.push_back(sum + bias[i]);
+        result.push_back(curr_linear_prod);
     }
     return result;
 }
