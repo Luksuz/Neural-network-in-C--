@@ -5,10 +5,6 @@
 
 using namespace std;
 
-class CrossEntropyLoss
-{
-    public:
-        vector<double> compute_loss(vector<vector<double>>);
-};
+double crossEntropyLoss(vector<double> softmaxed_z, const vector<double> y_true);
 
 #endif
