@@ -7,12 +7,16 @@ using namespace std;
 class Neuron
 {
 private:
-    vector<double> weights;
-    double bias;
+   
 
 public:
+    vector<double> weights;
+    double bias;
+    vector<double> d_weights;
+    double d_bias;
     Neuron(int input_size);
     double linear_transform(const vector<double>& x);
+    void backward(const vector<double>& x, double dL_dz);
 };
 
 #endif

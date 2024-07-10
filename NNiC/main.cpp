@@ -22,70 +22,58 @@ vector<pair<vector<vector<double>>, vector<vector<double>>>> create_batch(const 
 }
 
 int main() {
+    // Input data and ground truth labels
     vector<vector<double>> input_arr = {{0.3, 0.0, 0.22, 0.1}, {1.0, 0.4, 0.4, 0.98}, {0.91, 0.02, 0.1, 0.44}};
     vector<vector<double>> y_true = {{0, 0, 1, 0}, {0, 0, 1, 0}, {0, 0, 1, 0}};
 
+    // Hyperparameters
     int batch_size = 2;
 
+    // Create batches
     auto batched_data = create_batch(input_arr, y_true, batch_size);
 
-    cout << "Size of the input array: " << input_arr.size() << endl;
-    cout << "Number of batches: " << batched_data.size() << endl;
-
+    // Initialize linear layer
     Linear linearLayer(4, 4);
 
+    // Process each batch
     for (const auto& batch_data : batched_data) {
+        // Forward pass through linear layer
         vector<vector<double>> z1 = linearLayer.forward(batch_data.first);
 
+        // Apply ReLU activation
         vector<vector<double>> a1;
         for (const auto& z : z1) {
             vector<double> a = relu(z);
             a1.push_back(a);
         }
 
+        // Apply softmax activation
         vector<vector<double>> softmaxed;
         for (const auto& a : a1) {
             vector<double> out = softmax(a);
             softmaxed.push_back(out);
         }
 
+        // Calculate cross-entropy loss
         vector<double> total_loss;
         for (int i = 0; i < softmaxed.size(); ++i) {
             double loss = crossEntropyLoss(softmaxed[i], batch_data.second[i]);
             total_loss.push_back(loss);
         }
 
+        // Calculate gradients
+        vector<vector<double>> dL_dz;
+        for (int i = 0; i < softmaxed.size(); ++i) {
+            vector<double> deriv = crossEntropyLossDeriv(softmaxed[i], batch_data.second[i]);
+            dL_dz.push_back(deriv);
+        }
+
+        // Backward pass
+        vector<vector<double>> dL_dx = linearLayer.backward(batch_data.first, dL_dz);
+
+        // Print batch losses
         for (double loss : total_loss) {
             cout << "Batch loss: " << loss << endl;
-        }
-        cout << "Softmax result: ";
-            for (vector<double> vec : softmaxed) {
-                for(int i = 0; i < vec.size(); ++i){
-                    if(i == 3){
-                        vec[i] = 0.925;
-                    }else{
-                    vec[i] = 0.025;
-                    }
-                }
-            }
-    }
-   
-    cout << endl;
-
-    for (const auto& batch_data : batched_data) {
-        cout << "Batch X: ";
-        for (const auto& x : batch_data.first) {
-            for (const auto& val : x) {
-                cout << val << " ";
-            }
-            cout << endl;
-        }
-        cout << "Batch Y: ";
-        for (const auto& y : batch_data.second) {
-            for (const auto& val : y) {
-                cout << val << " ";
-            }
-            cout << endl;
         }
     }
 
