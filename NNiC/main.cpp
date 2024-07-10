@@ -23,7 +23,7 @@ int main() {
     cout << "Size of the input array: " << input_arr.size() << endl;
     cout << "Number of batches: " << batched_x.size() << endl;
 
-    Linear linearLayer(4, 5);  // 5 neurons in the layer
+    Linear linearLayer(4, 5);
 
     for (const auto& batch : batched_x) {
         vector<vector<double>> z1 = linearLayer.forward(batch);

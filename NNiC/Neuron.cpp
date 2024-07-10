@@ -1,7 +1,7 @@
 #include "Neuron.h"
-#include <cstdlib>   // For rand() function
-#include <ctime>     // For srand() function
-#include <numeric>   // For std::inner_product
+#include <cstdlib>  
+#include <ctime>     
+#include <numeric> 
 
 using namespace std;
 
