@@ -1,7 +1,7 @@
 #include <vector>
-#include <cmath> // for exp
-#include <numeric> // for accumulate
-#include <iostream> // for testing
+#include <cmath> 
+#include <numeric> 
+#include <iostream> 
 
 using namespace std;
 
