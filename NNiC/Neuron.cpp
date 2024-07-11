@@ -26,9 +26,18 @@ double Neuron::linear_transform(const vector<double>& x) {
     return linear_prod;
 }
 
-void Neuron::backward(const vector<double>& x, double dL_dz) {
+void Neuron::backward(const vector<double> x, double dL_dz) {
     for (size_t i = 0; i < x.size(); ++i) {
         d_weights[i] += x[i] * dL_dz; // gradient with respect to weights
     }
     d_bias += dL_dz; // gradient with respect to bias
+}
+
+void Neuron::update_weights(double learning_rate) {
+    for (size_t i = 0; i < weights.size(); ++i) {
+        weights[i] -= learning_rate * d_weights[i];
+        d_weights[i] = 0.0; // Reset gradient after update
+    }
+    bias -= learning_rate * d_bias;
+    d_bias = 0.0; // Reset gradient after update
 }

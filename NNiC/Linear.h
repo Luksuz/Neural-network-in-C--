@@ -18,6 +18,7 @@ public:
     Linear(int in_features, int n_neurons);
     vector<vector<double>> forward(vector<vector<double>> x);
     vector<vector<double>> backward(const vector<vector<double>> x, const vector<vector<double>> dL_dz);
+    void update_weights(double learning_rate);
 };
 
 #endif

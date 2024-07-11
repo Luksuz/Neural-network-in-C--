@@ -16,7 +16,8 @@ public:
     double d_bias;
     Neuron(int input_size);
     double linear_transform(const vector<double>& x);
-    void backward(const vector<double>& x, double dL_dz);
+    void backward(const vector<double> x, double dL_dz);
+    void update_weights(double learning_rate);
 };
 
 #endif

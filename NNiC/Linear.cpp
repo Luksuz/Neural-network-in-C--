@@ -39,3 +39,9 @@ vector<vector<double>> Linear::backward(const vector<vector<double>> x, const ve
 
     return dL_dx;
 }
+
+void Linear::update_weights(double learning_rate) {
+    for (auto& neuron : neurons) {
+        neuron.update_weights(learning_rate);
+    }
+}
